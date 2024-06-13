@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('national_id')->nullable();
             $table->string('email')->unique();
             $table->string('password');
+            $table->integer('status')->default(1);
             $table->string('personal_image')->nullable(); // Storing the file path of the uploaded image
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

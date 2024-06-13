@@ -4,7 +4,14 @@
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
+        @if ($errors->has('status'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+            <strong class="font-bold">خطأ!</strong>
+            <span class="block sm:inline">{{ $errors->first('status') }}</span>
+        </div>
+    @endif
+    
+    
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />

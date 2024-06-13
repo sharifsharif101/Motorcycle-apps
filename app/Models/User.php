@@ -22,7 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'personal_image',
-        'national_id'
+        'national_id',
+        'status'
     ];
 
     /**
@@ -46,5 +47,5 @@ class User extends Authenticatable implements MustVerifyEmail
     public function motorcycles()
     {
         return $this->hasMany(Motorcycle::class);
-    }
+    } 
 }

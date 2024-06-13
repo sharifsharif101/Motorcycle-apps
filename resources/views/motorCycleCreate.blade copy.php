@@ -1,96 +1,87 @@
-{{-- ===================================== --}}
+{{-- =====================================--}}
 
 
-@extends('layout')
+  @extends('layout')
 
 @section('title', 'ادخال الدراجة النارية')
 
-@section('content')
-<a href="{{ route('profile.edit') }}" class="btn btn-danger">  الملف الشخصي  </a>
+@section('content')  
+<style>
+    .center-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  
+</style>
+<div class="container">
+           
+    <div class="center-div">
+        
+       <div style="unicode-bidi: bidi-override !important; direction: unset !important; text-align:right;">
+                
+          <h2 class="my-5">أدخل الدراجة النارية</h2>
+                @if ($errors->any())
+                  
+          <div class="alert alert-danger">
+                       
+             <ul>
+                            @foreach ($errors->all() as $error)
+                              
+                <li>{{ $error }}</li>
+                            @endforeach
+                          
+             </ul>
+                     
+          </div>
+                @endif
+                @if (session('success'))
+                  
+          <div class="alert alert-success" id="successMessage">
+                       {{ session('success') }}
+                     
+          </div>
+                  <script>
+                       setTimeout(function() {
+                         var successMessage = document.getElementById('successMessage');
+                         if (successMessage) {
+                           successMessage.style.display = 'none';
+                         }
+                       }, 3000);
+                     
+          </script>
+                @endif
+                <form action="{{ route('store_motorcycle') }}" method="post" enctype="multipart/form-data">
+                   @csrf
+                   <input type="hidden" id="user_id" name="user_id" value="{{ $user_id }}">
+                   
+                   <div class="form-group mb-5">
+                       <label for="motorcycle_name">اسم الدراجة النارية</label>
+                       <input type="text" id="motorcycle_name" name="motorcycle_name" class="form-control">
+                   </div>
+                   
+                   <div class="form-group mb-5">
+                       <label for="motorcycle_type">نوع الدراجة النارية</label>
+                       <input type="text" id="motorcycle_type" name="motorcycle_type" class="form-control">
+                   </div>
+                   
+                   <div class="form-group mb-2">
+                       <label for="contract_pdf">  pdf أرفق الرخصة الخاصة بهذه الدراجة </label>
+                       <input type="file" id="contract_pdf" name="contract_pdf" class="form-control-file">
+                   </div>
+                   
+                   <button type="submit" class="btn btn-primary">تسجيل</button>
+               </form>
+               
+              
+       </div>
+           
 
-    <div class="card" style="margin-left: 30%; margin-right: 30%; margin-top:3%;margin-bottom:4%">
-        <div class="card-header"
-            style="unicode-bidi: bidi-override !important; direction: unset !important; text-align:center;">
-            <h2 class="">أدخل الدراجة النارية</h2>
-        </div>
-        <div class="card-body">
-            <style>
-                .center-div {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100vh;
-                }
-            </style>
-            <div class="container">
-
-                <div class="">
-
-                    <div style="unicode-bidi: bidi-override !important; direction: unset !important; text-align:right;">
-
-
-                        @if ($errors->any())
-
-                            <div class="alert alert-danger">
-
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-
-                                </ul>
-
-                            </div>
-                        @endif
-                        @if (session('success'))
-                            <div class="alert alert-success" id="successMessage">
-                                {{ session('success') }}
-
-                            </div>
-                            <script>
-                                setTimeout(function() {
-                                    var successMessage = document.getElementById('successMessage');
-                                    if (successMessage) {
-                                        successMessage.style.display = 'none';
-                                    }
-                                }, 3000);
-                            </script>
-                        @endif
-                        <form action="{{ route('store_motorcycle') }}" method="post" enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" id="user_id" name="user_id" value="{{ $user_id }}">
-
-                            <div class="form-group mb-5">
-                                <label for="motorcycle_name">اسم الدراجة النارية</label>
-                                <input type="text" id="motorcycle_name" name="motorcycle_name" class="form-control">
-                            </div>
-
-                            <div class="form-group mb-5">
-                                <label for="motorcycle_type">نوع الدراجة النارية</label>
-                                <input type="text" id="motorcycle_type" name="motorcycle_type" class="form-control">
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <label for="contract_pdf"> pdf أرفق الرخصة الخاصة بهذه الدراجة </label>
-                                <input type="file" id="contract_pdf" name="contract_pdf" class="form-control-file">
-                            </div>
-
-                            <button type="submit" class=" mt-5 btn btn-primary">تسجيل</button>
-                        </form>
-
-
-                    </div>
-
-
-
-                </div>
-            </div>
-        </div>
+         
     </div>
-
-
-
-@endsection
+ </div>
+ @endsection
 
 {{-- ظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظظ --}}
 {{-- /////////////// نسخة ممتازة --}}
@@ -187,3 +178,4 @@
 </html> --}}
 
 {{-- /////////////// نهاية نسخة ممتازة --}}
+ 

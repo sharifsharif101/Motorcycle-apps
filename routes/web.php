@@ -3,11 +3,12 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminController;
+use Illuminate\Support\Facades\DB;
+use App\Models\Motorcycle;
+use App\Models\User;
 
 use App\Http\Controllers\MotorcycleController;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Response;
-
+ 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +20,16 @@ use Illuminate\Support\Facades\Response;
 |
 */
 
+
+
+ 
+
 Route::get('/', function () {
-    return view('welcome');
+     $motorCount = Motorcycle::count();
+    //  $userCount = User::count();
+     $userCount = Motorcycle::distinct('user_id')->count('user_id');
+     $usersWithoutMotorcyclesCount = User::whereDoesntHave('motorcycles')->count();
+    return view('welcome',compact('motorCount','userCount','usersWithoutMotorcyclesCount'));
 });
 
 Route::get('/dashboard', function () {
@@ -48,7 +57,12 @@ require __DIR__.'/auth.php';
 Route::get('admin/dashboard', [AdminController::class,'dashboard'])->name('admin_dashboard');
 Route::middleware(['admin'])->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin_dashboard');
+Route::get('admin/index', [AdminController::class, 'index'])->name('admin_index');
+Route::get('show/{id}', [AdminController::class, 'show'])->name('motorcycle.show');
+Route::get('user/{id}', [AdminController::class, 'changeStatus'])->name('user.changeStatus');;
+ 
 });
+
 Route::get('admin/login', [AdminController::class,'login'])->name('admin_login');
 Route::post('admin/login-submit', [AdminController::class,'login_submit'])->name('admin_login_submit');
 Route::get('admin/logout', [AdminController::class,'logout'])->name('admin_logout');

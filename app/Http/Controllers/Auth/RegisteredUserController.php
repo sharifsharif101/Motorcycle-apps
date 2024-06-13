@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\AccountStatus;
 
 class RegisteredUserController extends Controller
 {
@@ -100,20 +101,15 @@ public function store(Request $request): RedirectResponse
         'password' => ['required', 'confirmed', Rules\Password::defaults()],
         'national_id' => ['required', 'string', 'max:255', 'unique:'.User::class],
         'personal_image' => ['required', 'max:2048'], // Accept only image files up to 2MB
-
     ]);
 
     if ($request->hasFile('personal_image')) {
-        // put image in the public storage
-       $filePath = Storage::disk('public')->put('images/personal_image/featured-images', request()->file('personal_image'));
-   }
+        // Store image in the public storage
+        $filePath = Storage::disk('public')->put('images/personal_image/featured-images', $request->file('personal_image'));
+    }
 
-    // Debugging: Check the values submitted in the request
-    // dd($request->all());
-
-    // Store the image
-    $imagePath = $filePath;
-    // $image = $request->file('image')->store('/public/categories');
+    // Store the image path
+    $imagePath = $filePath ?? null;
 
     $user = User::create([
         'name' => $request->name,
@@ -123,12 +119,19 @@ public function store(Request $request): RedirectResponse
         'personal_image' => $imagePath, // Save the image path
     ]);
 
+    // Create the account status for the user
+    AccountStatus::create([
+        'user_id' => $user->id,
+        'is_active' => true,
+    ]);
+
     event(new Registered($user));
 
     Auth::login($user);
 
     return redirect(RouteServiceProvider::HOME);
 }
+
 
 
 
