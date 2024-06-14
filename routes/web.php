@@ -30,7 +30,7 @@ Route::get('/', function () {
      $userCount = Motorcycle::distinct('user_id')->count('user_id');
      $usersWithoutMotorcyclesCount = User::whereDoesntHave('motorcycles')->count();
     return view('welcome',compact('motorCount','userCount','usersWithoutMotorcyclesCount'));
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -54,13 +54,22 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 /*Admin*/
-Route::get('admin/dashboard', [AdminController::class,'dashboard'])->name('admin_dashboard');
 Route::middleware(['admin'])->group(function () {
-    Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin_dashboard');
+
+    
+Route::get('Createmotorcycle', [AdminController::class,'create'])->name('Createmotorcycle');
+Route::post('Storemotorcycle', [AdminController::class,'store'])->name('Storemotorcycle');
+Route::get('Editemotorcycle/{id}', [AdminController::class, 'edit'])->name('Editemotorcycle');
+Route::put('postemotorcycle/{id}', [AdminController::class, 'update'])->name('Postmotorcycle');
+Route::delete('deleteemotorcycle/{id}', [AdminController::class, 'delete'])->name('deleteemotorcycle');;
+
+
+
+
+Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin_dashboard');
 Route::get('admin/index', [AdminController::class, 'index'])->name('admin_index');
 Route::get('show/{id}', [AdminController::class, 'show'])->name('motorcycle.show');
 Route::get('user/{id}', [AdminController::class, 'changeStatus'])->name('user.changeStatus');;
- 
 });
 
 Route::get('admin/login', [AdminController::class,'login'])->name('admin_login');

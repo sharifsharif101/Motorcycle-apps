@@ -30,7 +30,8 @@ class MotorcycleController extends Controller
     
     public function create()
     {
-        $user_id = auth()->user()->id; // Assuming you're using Laravel's authentication
+        $user_id = auth()->user()->id; 
+ 
         return view('motorCycleCreate', compact('user_id'));
     }
 
@@ -72,42 +73,7 @@ class MotorcycleController extends Controller
         return  redirect()->back()->with('danger', ' تم الحذف بنجاح.');
     }
 
-    // public function store(Request $request)
-    // {
-    //     // Validate the incoming request data
-    //     // $validatedData = $request->validate([
-    //     //     'motorcycle_name' => 'required|string|max:255',
-    //     //     'motorcycle_type' => 'required|string|max:255',
-    //     //     'contract_pdf' => 'required|file|mimes:pdf|max:2048', // Adjust maximum file size as needed
-    //     // ]);
-
-    //     $data = $request->validate([
-    //         'motorcycle_name' => 'required|string|max:255',
-    //         'motorcycle_type' => 'required|string|max:255',
-    //         'contract_pdf' => 'required|file|mimes:pdf|max:2048', // Adjust maximum file size as needed
-    //      ]);
-
-    //     if ($request->hasFile('contract_pdf')) {
-    //         // put image in the public storage
-    //        $filePath = Storage::disk('public')->put('contract_pdf/contract_pdf/featured-pdf', request()->file('contract_pdf'));
-    //    }
-
-    //    $pdfpath = $filePath;
-    // //    $user = Auth::user();
-
-    // //    $motorcycle = Motorcycle::create([
-    // //     'motorcycle_name' => $request->name,
-    // //     'motorcycle_type' => $request->email,
-    // //     'contract_pdf' => $pdfpath, // Save the image path
-    // //     'user_id' => $user->id, // Associate with the authenticated user
-
-    // // ]);
-    // Motorcycle::create($data);
-
-    // // Redirect back or to a success page
-    // return redirect()->route('create_motorcycle')->with('success', 'Motorcycle created successfully!');
-    // }
-
+     
 
     public function store(Request $request)
     {
@@ -136,11 +102,8 @@ class MotorcycleController extends Controller
 
         // Add user_id to the data array
         $data['user_id'] = $user->id;
-   
-
         // Create a new motorcycle associated with the user
         Motorcycle::create($data);
-   
         // Redirect back or to a success page
         return redirect()->back()->with('success', 'Motorcycle created successfully!');
        

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('motorcycles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('motorcycle_name');
+            $table->foreignId('admin_id')->nullable()->constrained()->onDelete('cascade');
+             $table->string('motorcycle_name');
             $table->string('motorcycle_type');
             $table->string('contract_pdf'); // Store the file path
             $table->timestamps();

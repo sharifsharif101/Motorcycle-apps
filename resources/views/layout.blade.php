@@ -7,6 +7,7 @@
     <title>@yield('title', 'Admin Dashboard')</title>
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    @vite(['resources/js/scripts.js'])
 
     <style>
         body {

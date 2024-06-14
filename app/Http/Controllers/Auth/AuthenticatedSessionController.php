@@ -54,14 +54,18 @@ class AuthenticatedSessionController extends Controller
     }
 
 
-    public function destroy(Request $request): RedirectResponse
+public function destroy(Request $request): RedirectResponse
     {
+        // تسجيل خروج المستخدم
         Auth::guard('web')->logout();
 
+        // إبطال الجلسة الحالية
         $request->session()->invalidate();
 
+        // تجديد رمز الجلسة (CSRF token)
         $request->session()->regenerateToken();
 
-        return redirect('login');
+        // إعادة توجيه المستخدم إلى الصفحة الرئيسية
+        return redirect('/');
     }
 }
